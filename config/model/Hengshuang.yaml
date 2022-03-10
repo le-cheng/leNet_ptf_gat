@@ -1,0 +1,4 @@
+nneighbor: 16
+nblocks: 4
+transformer_dim: 32
+name: Hengshuang

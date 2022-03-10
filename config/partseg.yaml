@@ -1,0 +1,23 @@
+batch_size: 8
+epoch: 200
+learning_rate: 0.005
+gpu: 0
+num_workers : 8  # 数据处理进程数
+num_point: 1024
+optimizer: SGD
+weight_decay: 1e-4
+normal: True
+lr_decay: 0.5
+step_size: 20
+scheduler_gamma: 0.1
+
+defaults:
+  - model: Hengshuang
+
+hydra:
+  run:
+    dir: log/${hydra.job.name}/${model.name}/${now:%m-%d_%H:%M:%S}
+
+  sweep:
+    dir: log/multirun_${hydra.job.name}/multirun${now:%m-%d_%H:%M}
+    subdir: ${hydra.job.override_dirname}

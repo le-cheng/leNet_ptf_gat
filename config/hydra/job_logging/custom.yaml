@@ -1,0 +1,16 @@
+disable_existing_loggers: True
+version: 1
+formatters:
+  simple:
+    format: "[%(asctime)s %(levelname)s %(filename)s (line:%(lineno)d) %(process)d] %(message)s"
+handlers:
+  console:
+    level: ERROR
+    class: logging.StreamHandler
+    formatter: simple
+    stream: ext://sys.stdout
+root:
+  handlers: [console]
+  level: ERROR
+
+

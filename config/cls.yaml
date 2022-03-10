@@ -1,0 +1,58 @@
+jobname: dgat
+exp: avg
+epoch: 200
+batch_size: 16
+test: True
+test_batch_size: 16
+print_model: False
+model_copy_name: model_1
+
+learning_rate: 0.1
+scheduler_step: 20
+scheduler_gamma: 0.1
+weight_decay: 1e-6
+# 10
+gpu: 0
+ngpus_per_node: 2 # 每个节点的GPU总数
+nr: 0 #是当前节点在所有节点的序号
+world_size: 1  #节点总数乘以每个节点的GPU数
+nodes: 1 # 节点总数
+dist_url: tcp://localhost:8888
+
+num_workers : 8 # 数据处理进程数 buyao taida [24不行，数据会截断]
+num_point: 1024
+optimizer: SGD
+
+manual_seed: 1234
+
+
+# else
+normal: True
+num_class: 40
+uniform: False
+input_dim: 6
+DATA_PATH: data/
+cfg_path: config/cls.yaml
+lastresult_path: last_result/
+log_name: multitrain.log
+
+
+defaults:
+  - _self_
+  - model: Hengshuang
+  - override hydra/job_logging: disabled
+
+hydra: 
+  
+  # hydra_logging: none
+  output_subdir: null
+  # disable_existing_loggers: True
+  run:
+    # dir: log/${hydra.job.name}/${model.name}/${now:%m-%d_%H:%M:%S}
+    # dir: log/${hydra.job.name}/${model.name}_${now:%m-%d_%H:%M}/${jobname}
+    dir: log/${jobname}/${now:%m-%d_%H:%M}_${exp}
+
+  sweep:
+    dir: log/sequence_run_${hydra.job.name}/multirun${now:%m-%d_%H:%M}
+    subdir: ${hydra.job.override_dirname}
+job_logging: None
